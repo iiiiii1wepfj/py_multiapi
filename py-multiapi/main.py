@@ -17,7 +17,9 @@ class multiapi:
     async def exec_code(lang: str, code: str):
         if not (lang or code):
             return "please specify the code or the language"
-        a = (await http.get(f"{api_url}/exec?lang={lang}&code={code}")).json()
+        a = (
+            await http.get(f"{api_url}/exec", params=dict(lang=lang, code=code))
+        ).json()
         await http.aclose()
         if "Errors" in a:
             return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Errors:\n\n {a['Errors']}"
@@ -30,7 +32,7 @@ class multiapi:
     async def ocr(url: str):
         if not url:
             return "please specify the url"
-        a = (await http.get(f"{api_url}/ocr?url={url}")).json()
+        a = (await http.get(f"{api_url}/ocr", params=dict(url=url))).json()
         await http.aclose()
         if "ocr" in a:
             return f"ocr: {a['ocr']}"
@@ -44,11 +46,12 @@ class multiapi:
         if not text:
             return "please specify the url"
         a = (
-            (await http.get(f"{api_url}/tr?text={text}&lang={lang}")).json()
+            (await http.get(f"{api_url}/tr", params=dict(text=text, lang=lang))).json()
             if not fromlang
             else (
                 await http.get(
-                    f"{api_url}/tr?text={text}&fromlang={fromlang}&lang={lang}"
+                    f"{api_url}/tr?text",
+                    params=dict(text=text, fromlang=fromlang, lang=lang),
                 )
             ).json()
         )
