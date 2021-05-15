@@ -50,3 +50,17 @@ class multiapi:
         )
         await http.aclose()
         return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
+
+    async def urban(query: str):
+        if not query:
+            return "please specify the query"
+        a = {
+            x["term"]: x["preview"]
+            for x in (
+                await http.get(
+                    "https://api.itaykibotsonetwo.ml/ud", params=dict(query=query)
+                )
+            ).json()["results"]
+        }
+        await http.aclose()
+        return a
