@@ -7,11 +7,13 @@ api_url = "https://api.itaykibotsonetwo.ml"
 
 
 class multiapi:
+    @staticmethod
     async def get_exec_langs():
         a = (await http.get(f"{api_url}/execlangs")).json()
         await http.aclose()
         return a["langs"]
 
+    @staticmethod
     async def exec_code(lang: str, code: str):
         if not (lang or code):
             return "please specify the code or the language"
@@ -24,6 +26,7 @@ class multiapi:
         else:
             return a["langs"]
 
+    @staticmethod
     async def ocr(url: str):
         if not url:
             return "please specify the url"
@@ -34,6 +37,7 @@ class multiapi:
         elif "error" in a:
             return f"Error: {a['error']}"
 
+    @staticmethod
     async def translate(
         text: str, fromlang: Optional[str] = None, lang: Optional[str] = "en"
     ):
@@ -51,6 +55,7 @@ class multiapi:
         await http.aclose()
         return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
 
+    @staticmethod
     async def urban(query: str):
         if not query:
             return "please specify the query"
