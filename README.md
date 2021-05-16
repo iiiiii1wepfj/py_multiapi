@@ -13,3 +13,7 @@ import asyncio
 async def main():
     print(await multiapi.exec_code(lang="python3", code="print('Hello World')"))
 asyncio.run(main())
+```
+## links
+
+[pypi](https://pypi.org/project/py-multiapi)
