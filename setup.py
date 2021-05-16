@@ -8,11 +8,12 @@ setuptools.setup(
     version="1",
     author="Itay K",
     author_email="itayki98@gmail.com",
-    description="A Python Wrapper for api.itaykibotsonetwo.ml/docs",
+    description="A Python Wrapper for api.itaykibotsonetwo.ml",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/iiiiii1wepfj/py_multiapi",
     packages=setuptools.find_packages(),
+    project_urls={'Documentation': 'https://api.itaykibotsonetwo.ml/docs', 'Source': 'https://github.com/iiiiii1wepfj/py_multiapi'},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
