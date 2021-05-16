@@ -5,7 +5,6 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 setuptools.setup(
     name="py_multiapi",
-    packages = ['py_multiapi'],
     version="1",
     author="Itay K",
     author_email="itayki98@gmail.com",
