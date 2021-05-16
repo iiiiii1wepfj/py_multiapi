@@ -4,7 +4,7 @@ a python library for api.itaykibotsonetwo.ml
 
 
 ### Installation
- ```pip3 install git+https://github.com/iiiiii1wepfj/py_multiapi.git```
+ ```pip3 install py-multiapi```
 
 ### Example
    ```
