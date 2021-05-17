@@ -1,6 +1,6 @@
 # py-multiapi
 
-a python library for api.itaykibotsonetwo.ml
+a python library for api.itayki.com
 
 
 ### Installation
