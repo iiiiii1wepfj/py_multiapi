@@ -3,7 +3,7 @@ from typing import Optional
 
 http = httpx.AsyncClient(http2=True)
 
-api_url = "https://api.itaykibotsonetwo.ml"
+api_url = "https://api.itayki.com"
 
 
 class multiapi:
