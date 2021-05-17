@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/iiiiii1wepfj/py_multiapi",
     packages=setuptools.find_packages(),
-    download_url = 'https://github.com/iiiiii1wepfj/py_multiapi/archive/refs/tags/v1.tar.gz',
+    download_url = 'https://github.com/iiiiii1wepfj/py_multiapi/archive/refs/tags/v2.tar.gz',
     project_urls={'Documentation': 'https://api.itayki.com/docs', 'Source': 'https://github.com/iiiiii1wepfj/py_multiapi'},
     classifiers=[
         "Programming Language :: Python :: 3",
