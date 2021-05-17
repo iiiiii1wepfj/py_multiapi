@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 setuptools.setup(
     name="py_multiapi",
-    version="1",
+    version="2",
     author="Itay K",
     author_email="itayki98@gmail.com",
     description="A Python Wrapper for api.itayki.com",
