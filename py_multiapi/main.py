@@ -64,11 +64,9 @@ class multiapi:
             return "please specify the query"
         a = {
             x["term"]: x["preview"]
-            for x in (
-                await http.get(
-                    "https://api.itaykibotsonetwo.ml/ud", params=dict(query=query)
-                )
-            ).json()["results"]
+            for x in (await http.get(f"{api_url}/ud", params=dict(query=query))).json()[
+                "results"
+            ]
         }
         await http.aclose()
         return a
