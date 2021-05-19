@@ -70,3 +70,18 @@ class multiapi:
         }
         await http.aclose()
         return a
+
+    @staticmethod
+    async def webshot(
+        url: str,
+        width: Optional[int] = 1280,
+        height: Optional[int] = 720,
+    ):
+        if not url:
+            return "please specify the url"
+        a = await http.get(
+            f"{api_url}/print", params=dict(url=url, width=width, height=height)
+        )
+        await http.aclose()
+        a = a.read()
+        return a
