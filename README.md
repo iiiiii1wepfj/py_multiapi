@@ -33,7 +33,7 @@ get help from the function:
 ```
 from py_multiapi import multiapi
 def main_help():
- print(help(multiapi.exec_code))
+    print(help(multiapi.exec_code))
 main_help()
 ```
 
