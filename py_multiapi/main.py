@@ -1,5 +1,5 @@
 import httpx
-from typing import Optional
+from typing import Optional, Union
 
 http = httpx.AsyncClient(http2=True)
 
@@ -85,3 +85,11 @@ class multiapi:
         await http.aclose()
         a = a.read()
         return a
+
+    @staticmethod
+    async def random_number(min: Union[int, str] = 1, max: Union[int, str] = 100):
+        if not (min or max):
+            return "please specify the min and max"
+        a = (await http.get(f"{api_url}/random", params=dict(min=min, max=max))).json()
+        await http.aclose()
+        return a["number"]
