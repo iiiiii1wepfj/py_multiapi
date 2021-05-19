@@ -22,7 +22,7 @@ make web screenshot:
 from py_multiapi import multiapi
 import asyncio
 async def main():
-   a = await multiapi.webshot(url="duckduckgo.com")
+    a = await multiapi.webshot(url="duckduckgo.com")
     with open("test.png", "wb") as img:
         img.write(a)
 asyncio.run(main())
