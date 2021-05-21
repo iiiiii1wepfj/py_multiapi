@@ -132,3 +132,16 @@ class multiapi:
         a = (await http.get(f"{api_url}/random", params=dict(min=min, max=max))).json()
         await http.aclose()
         return a["number"]
+
+    @staticmethod
+    async def pypi_search(package: str):
+        """
+        Search python packages on pypi.
+        parameters:
+        package: the name of the package.
+        """
+        if not package:
+            return "please specify package name"
+        a = (await http.get(f"{api_url}/pypi", params=dict(package=package))).json()
+        await http.aclose()
+        return a
