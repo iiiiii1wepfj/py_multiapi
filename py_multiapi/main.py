@@ -77,7 +77,10 @@ class multiapi:
             ).json()
         )
         await http.aclose()
-        return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
+        if "error" in a:
+            return a
+        else:
+            return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
 
     @staticmethod
     async def urban(query: str):
