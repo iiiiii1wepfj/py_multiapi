@@ -13,7 +13,6 @@ class multiapi:
         Get the list of the supported languages to execute code using tio.run.
         """
         a = (await http.get(f"{api_url}/execlangs")).json()
-        await http.aclose()
         return a["langs"]
 
     @staticmethod
@@ -29,7 +28,6 @@ class multiapi:
         a = (
             await http.get(f"{api_url}/exec", params=dict(lang=lang, code=code))
         ).json()
-        await http.aclose()
         if "Errors" in a:
             return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Errors:\n\n {a['Errors']}"
         elif "Stats" in a:
@@ -47,7 +45,6 @@ class multiapi:
         if not url:
             return "please specify the url"
         a = (await http.get(f"{api_url}/ocr", params=dict(url=url))).json()
-        await http.aclose()
         if "ocr" in a:
             return f"ocr: {a['ocr']}"
         elif "error" in a:
@@ -76,7 +73,6 @@ class multiapi:
                 )
             ).json()
         )
-        await http.aclose()
         if "error" in a:
             return a
         else:
@@ -97,7 +93,6 @@ class multiapi:
                 "results"
             ]
         }
-        await http.aclose()
         return a
 
     @staticmethod
@@ -118,7 +113,6 @@ class multiapi:
         a = await http.get(
             f"{api_url}/print", params=dict(url=url, width=width, height=height)
         )
-        await http.aclose()
         a = a.read()
         return a
 
@@ -133,7 +127,6 @@ class multiapi:
         if not (min or max):
             return "please specify the min and max"
         a = (await http.get(f"{api_url}/random", params=dict(min=min, max=max))).json()
-        await http.aclose()
         return a["number"]
 
     @staticmethod
@@ -146,5 +139,4 @@ class multiapi:
         if not package:
             return "please specify package name"
         a = (await http.get(f"{api_url}/pypi", params=dict(package=package))).json()
-        await http.aclose()
         return a
