@@ -140,3 +140,36 @@ class multiapi:
             return "please specify package name"
         a = (await http.get(f"{api_url}/pypi", params=dict(package=package))).json()
         return a
+
+    @staticmethod
+    async def paste(
+        content: str, title: Optional[str] = None, author: Optional[str] = None
+    ):
+        """
+        Paste the text in nekobin.com.
+        parameters:
+        content: the text to paste,
+        title (optional): the title,
+        author (optional): the author.
+        """
+        if not content:
+            return "please specify the content"
+        a = (
+            await http.get(
+                f"{api_url}/paste",
+                params=dict(content=content, title=title, author=author),
+            )
+        ).json()
+        return a
+
+    @staticmethod
+    async def get_paste(paste: str):
+        """
+        Get the paste data from nekobin.com.
+        parameters:
+        paste: the paste.
+        """
+        if not paste:
+            return "please specify the paste"
+        a = (await http.get(f"{api_url}/get_paste", params=dict(paste=paste))).json()
+        return a
