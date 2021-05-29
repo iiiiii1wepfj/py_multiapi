@@ -1,7 +1,6 @@
 import httpx
 from typing import Optional, Union
 
-http = httpx.AsyncClient(http2=True)
 
 api_url = "https://api.itayki.com"
 
@@ -12,8 +11,9 @@ class multiapi:
         """
         Get the list of the supported languages to execute code using tio.run.
         """
-        a = (await http.get(f"{api_url}/execlangs")).json()
-        return a["langs"]
+        async with httpx.AsyncClient(http2=True) as http:
+            a = (await http.get(f"{api_url}/execlangs")).json()
+            return a["langs"]
 
     @staticmethod
     async def exec_code(lang: str, code: str):
@@ -23,17 +23,18 @@ class multiapi:
         lang: the language to execute,
         code: the code to execute.
         """
-        if not (lang or code):
-            return "please specify the code or the language"
-        a = (
-            await http.get(f"{api_url}/exec", params=dict(lang=lang, code=code))
-        ).json()
-        if "Errors" in a:
-            return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Errors:\n\n {a['Errors']}"
-        elif "Stats" in a:
-            return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Stats:\n\n {a['Stats']}"
-        else:
-            return a["langs"]
+        async with httpx.AsyncClient(http2=True) as http:
+            if not (lang or code):
+                return "please specify the code or the language"
+            a = (
+                await http.get(f"{api_url}/exec", params=dict(lang=lang, code=code))
+            ).json()
+            if "Errors" in a:
+                return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Errors:\n\n {a['Errors']}"
+            elif "Stats" in a:
+                return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Stats:\n\n {a['Stats']}"
+            else:
+                return a["langs"]
 
     @staticmethod
     async def ocr(url: str):
@@ -42,13 +43,14 @@ class multiapi:
         parameters:
         url: the url of the image.
         """
-        if not url:
-            return "please specify the url"
-        a = (await http.get(f"{api_url}/ocr", params=dict(url=url))).json()
-        if "ocr" in a:
-            return f"ocr: {a['ocr']}"
-        elif "error" in a:
-            return f"Error: {a['error']}"
+        async with httpx.AsyncClient(http2=True) as http:
+            if not url:
+                return "please specify the url"
+            a = (await http.get(f"{api_url}/ocr", params=dict(url=url))).json()
+            if "ocr" in a:
+                return f"ocr: {a['ocr']}"
+            elif "error" in a:
+                return f"Error: {a['error']}"
 
     @staticmethod
     async def translate(
@@ -61,22 +63,25 @@ class multiapi:
         fromlang (optional): the language code of the text to translate (if not specified, this is auto detect the text),
         lang (optional): the language code of the translated text (the output text) (if not specified, this is translate to english).
         """
-        if not text:
-            return "please specify the url"
-        a = (
-            (await http.get(f"{api_url}/tr", params=dict(text=text, lang=lang))).json()
-            if not fromlang
-            else (
-                await http.get(
-                    f"{api_url}/tr?text",
-                    params=dict(text=text, fromlang=fromlang, lang=lang),
-                )
-            ).json()
-        )
-        if "error" in a:
-            return a
-        else:
-            return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
+        async with httpx.AsyncClient(http2=True) as http:
+            if not text:
+                return "please specify the url"
+            a = (
+                (
+                    await http.get(f"{api_url}/tr", params=dict(text=text, lang=lang))
+                ).json()
+                if not fromlang
+                else (
+                    await http.get(
+                        f"{api_url}/tr?text",
+                        params=dict(text=text, fromlang=fromlang, lang=lang),
+                    )
+                ).json()
+            )
+            if "error" in a:
+                return a
+            else:
+                return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
 
     @staticmethod
     async def urban(query: str):
@@ -85,15 +90,16 @@ class multiapi:
         parameters:
         query: the query to search.
         """
-        if not query:
-            return "please specify the query"
-        a = {
-            x["term"]: x["preview"]
-            for x in (await http.get(f"{api_url}/ud", params=dict(query=query))).json()[
-                "results"
-            ]
-        }
-        return a
+        async with httpx.AsyncClient(http2=True) as http:
+            if not query:
+                return "please specify the query"
+            a = {
+                x["term"]: x["preview"]
+                for x in (
+                    await http.get(f"{api_url}/ud", params=dict(query=query))
+                ).json()["results"]
+            }
+            return a
 
     @staticmethod
     async def webshot(
@@ -108,13 +114,14 @@ class multiapi:
         width (optional): the width of the screenshot (default to 1280),
         height (optional): the height code of the screenshot (default to 720).
         """
-        if not url:
-            return "please specify the url"
-        a = await http.get(
-            f"{api_url}/print", params=dict(url=url, width=width, height=height)
-        )
-        a = a.read()
-        return a
+        async with httpx.AsyncClient(http2=True) as http:
+            if not url:
+                return "please specify the url"
+            a = await http.get(
+                f"{api_url}/print", params=dict(url=url, width=width, height=height)
+            )
+            a = a.read()
+            return a
 
     @staticmethod
     async def random_number(min: Union[int, str] = 1, max: Union[int, str] = 100):
@@ -124,10 +131,13 @@ class multiapi:
         min (optional): the minimum number (default to 1),
         max (optional): the maximum number (default to 100).
         """
-        if not (min or max):
-            return "please specify the min and max"
-        a = (await http.get(f"{api_url}/random", params=dict(min=min, max=max))).json()
-        return a["number"]
+        async with httpx.AsyncClient(http2=True) as http:
+            if not (min or max):
+                return "please specify the min and max"
+            a = (
+                await http.get(f"{api_url}/random", params=dict(min=min, max=max))
+            ).json()
+            return a["number"]
 
     @staticmethod
     async def pypi_search(package: str):
@@ -136,10 +146,11 @@ class multiapi:
         parameters:
         package: the name of the package.
         """
-        if not package:
-            return "please specify package name"
-        a = (await http.get(f"{api_url}/pypi", params=dict(package=package))).json()
-        return a
+        async with httpx.AsyncClient(http2=True) as http:
+            if not package:
+                return "please specify package name"
+            a = (await http.get(f"{api_url}/pypi", params=dict(package=package))).json()
+            return a
 
     @staticmethod
     async def paste(
@@ -152,15 +163,16 @@ class multiapi:
         title (optional): the title,
         author (optional): the author.
         """
-        if not content:
-            return "please specify the content"
-        a = (
-            await http.get(
-                f"{api_url}/paste",
-                params=dict(content=content, title=title, author=author),
-            )
-        ).json()
-        return a
+        async with httpx.AsyncClient(http2=True) as http:
+            if not content:
+                return "please specify the content"
+            a = (
+                await http.get(
+                    f"{api_url}/paste",
+                    params=dict(content=content, title=title, author=author),
+                )
+            ).json()
+            return a
 
     @staticmethod
     async def get_paste(paste: str):
@@ -169,7 +181,10 @@ class multiapi:
         parameters:
         paste: the paste.
         """
-        if not paste:
-            return "please specify the paste"
-        a = (await http.get(f"{api_url}/get_paste", params=dict(paste=paste))).json()
-        return a
+        async with httpx.AsyncClient(http2=True) as http:
+            if not paste:
+                return "please specify the paste"
+            a = (
+                await http.get(f"{api_url}/get_paste", params=dict(paste=paste))
+            ).json()
+            return a
