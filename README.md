@@ -41,3 +41,7 @@ main_help()
 ## links
 
 [pypi](https://pypi.org/project/py-multiapi)
+
+
+# versions in other languages
+ js https://github.com/AndrewLaneX/multiapi
