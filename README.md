@@ -44,4 +44,5 @@ main_help()
 
 
 # versions in other languages
- js https://github.com/AndrewLaneX/multiapi
+ nodejs https://github.com/AndrewLaneX/multiapi
+ golang https://github.com/rojserbest/multiapi
