@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf8") as fh:
 
 setuptools.setup(
     name="py_multiapi",
-    version="12",
+    version="13",
     author="Itay K",
     author_email="itayki98@gmail.com",
     description="A Python Wrapper for api.itayki.com",
@@ -13,7 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/iiiiii1wepfj/py_multiapi",
     packages=setuptools.find_packages(),
-    download_url = 'https://github.com/iiiiii1wepfj/py_multiapi/archive/refs/tags/v12.tar.gz',
+    download_url = 'https://github.com/iiiiii1wepfj/py_multiapi/archive/refs/tags/v13.tar.gz',
     project_urls={'Documentation': 'https://api.itayki.com/docs', 'Source': 'https://github.com/iiiiii1wepfj/py_multiapi'},
     classifiers=[
         "Programming Language :: Python :: 3",
