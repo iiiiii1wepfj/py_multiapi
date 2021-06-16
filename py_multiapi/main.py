@@ -191,38 +191,16 @@ class multiapi:
                 await http.get(f"{api_url}/get_paste", params=dict(paste=paste))
             ).json()
             return a
-    async def paste(
-        content: str, title: Optional[str] = None, author: Optional[str] = None
-    ):
-        """
-        Paste the text in nekobin.com.
-        parameters:
-        content: the text to paste,
-        title (optional): the title,
-        author (optional): the author.
-        """
-        async with httpx.AsyncClient(http2=True) as http:
-            if not content:
-                return "please specify the content"
-            a = (
-                await http.get(
-                    f"{api_url}/paste",
-                    params=dict(content=content, title=title, author=author),
-                )
-            ).json()
-            return a
 
     @staticmethod
-    async def get_paste(paste: str):
+    async def youtube(query: str):
         """
-        Get the paste data from nekobin.com.
+        Search videos in YouTube.
         parameters:
-        paste: the paste.
+        query: the name of the video to search.
         """
         async with httpx.AsyncClient(http2=True) as http:
-            if not paste:
-                return "please specify the paste"
-            a = (
-                await http.get(f"{api_url}/get_paste", params=dict(paste=paste))
-            ).json()
+            if not query:
+                return "please specify the query"
+            a = (await http.get(f"{api_url}/youtube", params=dict(query=query))).json()
             return a
