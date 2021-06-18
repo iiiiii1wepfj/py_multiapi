@@ -120,10 +120,10 @@ class multiapi:
             a = await http.get(
                 f"{api_url}/print", params=dict(url=url, width=width, height=height)
             )
-            if "error" in a.json():
-                a = f"Error: {(a.json())['error']}"
-            else:
+            try:
                 a = a.read()
+            except:
+                a = a.json()
             return a
 
     @staticmethod
