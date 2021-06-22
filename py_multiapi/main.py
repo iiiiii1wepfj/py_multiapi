@@ -204,3 +204,20 @@ class multiapi:
                 return "please specify the query"
             a = (await http.get(f"{api_url}/youtube", params=dict(query=query))).json()
             return a
+
+    @staticmethod
+    async def make_qr(text: str):
+        """
+        Returns a qr code of the specified text or the url.
+        parameters:
+        text: the text or the text for the qr code.
+        """
+        async with httpx.AsyncClient(http2=True) as http:
+            if not text:
+                return "please specify the text"
+            a = await http.get(f"{api_url}/makeqr", params=dict(text=text))
+            try:
+                a = a.read()
+            except:
+                a = a.json()
+            return a
