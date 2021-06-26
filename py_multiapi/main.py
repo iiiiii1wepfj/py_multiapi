@@ -29,12 +29,7 @@ class multiapi:
             a = (
                 await http.get(f"{api_url}/exec", params=dict(lang=lang, code=code))
             ).json()
-            if "Errors" in a:
-                return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Errors:\n\n {a['Errors']}"
-            elif "Stats" in a:
-                return f"Language: {a['Language']}\n\n Code:\n\n {a['Code']}\n\n Results:\n\n {a['Results']}\n\n Stats:\n\n {a['Stats']}"
-            else:
-                return a["langs"]
+            return a
 
     @staticmethod
     async def ocr(url: str):
@@ -47,10 +42,7 @@ class multiapi:
             if not url:
                 return "please specify the url"
             a = (await http.get(f"{api_url}/ocr", params=dict(url=url))).json()
-            if "ocr" in a:
-                return f"ocr: {a['ocr']}"
-            elif "error" in a:
-                return f"Error: {a['error']}"
+            return a
 
     @staticmethod
     async def translate(
@@ -78,10 +70,7 @@ class multiapi:
                     )
                 ).json()
             )
-            if "error" in a:
-                return a
-            else:
-                return f"Text: \n\n{a['text']}\n\nfrom language: {a['from_language']}\n\nto language: {a['to_language']}"
+            return a
 
     @staticmethod
     async def urban(query: str):
